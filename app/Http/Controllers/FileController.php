@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\File;
 use App\Models\Document;
+use App\Models\User;
+use \OwenIt\Auditing\Models\Audit;
 
 class FileController extends Controller
 {
@@ -30,16 +31,8 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $file = new File;
-        $file->file_number = $request->file_number;
-        $file->client_name = $request->client_name;
-        $file->place_of_allocation = $request->place_of_allocation;
-        $file->plot_number = $request->plot_number;
-        $file->category = $request->category;
-        $file->created_at = now();
-        $file->updated_at = now();
-        $file->save();
-        return redirect()->route('home');
+        File::create($request->all());
+        return redirect()->route('home')->with('success', 'File created successfully.');
     }
 
     /**
@@ -112,5 +105,33 @@ class FileController extends Controller
         $fileName = $document->document_name . '.' . pathinfo($document->attachment, PATHINFO_EXTENSION);
         return response()->download($filePath, $fileName);
     }
+
+    public function assignUser(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'file_id' => 'required|exists:files,id',
+        ]);
+
+        $file = File::find($request->file_id);
+        $file->user_id = $request->user_id;
+        $file->save();
+
+
+       return response()->json([
+            'message' => 'User assigned to file successfully',
+            'file' => $file
+        ]);
+    }
+
+
+    public function showAudits()
+    {
+        $audits = Audit::where('auditable_type', 'App\Models\File')->with([
+            'user',
+        ])->get();
+        return view('admin.audit', ['audits' => $audits]);
+    }
+
   
 }

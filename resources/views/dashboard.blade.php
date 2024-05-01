@@ -10,57 +10,66 @@
                     </div>
                     <div class="row">
                     <div class="col-10">
-                            
                         </div>
                         <div class="col-2">
                             <a class="btn btn-sm btn-secondary" href="{{ route('file.create') }}">Create File</a>
                         </div>
                     </div>
-                    <li class="nav-item pb-2">
-    <a class="nav-link {{ (Request::is('users.index') ? 'active' : '') }}" href="{{ route('users.index') }}">
-        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('users.index') ? 'text-white' : 'text-dark') }}" aria-hidden="true"></i>
-        </div>
-        <span class="nav-link-text ms-1">User Management</span>
-    </a>
-</li>
 
-                    <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                            <table class="table align-items-center justify-content-center mb-0" id="example"  class="display" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File number</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client name</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Plot Number</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Category</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Place of allocation</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    @foreach($files as $file)
+                    <div class="card-body px-2">
+                        <div class="table-responsive ">
+                            <table class="table display" id="example">
+                                <thead>
                                     <tr>
-                                        <td>{{  $file->file_number }}</td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0">{{  $file->client_name }}</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <div class="d-flex align-items-center justify-content-center">{{  $file->plot_number }}</div>
-                                        </td>
-                                        <td class="align-middle">{{  $file->category }}</td>
-                                        <td class="align-middle">{{  $file->place_of_allocation }}</td>
-                                        <td>
-                                            <a href="{{ route('file.show', $file->id) }}" class="btn btn-sm btn-info">Open</a>
-                                            <a href="{{ route('file.edit', $file->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                            <form action="{{ route('files.destroy', $file->id) }}" method="POST" style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
-                                           
-                                        </td>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File number</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client name</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Assigned</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Barcode</th>
+                                        <th>Action</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($files as $file)
+                                        <tr>
+                                            <td>{{  $file->file_number }}</td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0">{{  $file->client_name }}</p>
+                                            </td>
+                                            <td>
+                                                {{ $file->user ? $file->user->name : 'Not assigned' }}
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        {!! '<img src="data:image/jpeg;base64,' . DNS1D::getBarcodeJPG($file->file_number, 'C39+') . '" alt="barcode" />' !!}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="display: flex; align-items: center;">
+                                                <a href="{{ route('file.show', $file->id) }}" class="btn btn-sm btn-info custom-btn">
+                                                   <span class="btn-inner--icon"><i class="fa fa-folder-open" style="font-size: 10px;"></i></span>
+                                                </a>
+                                                <a href="{{ route('file.edit', $file->id) }}" class="btn btn-sm btn-warning custom-btn">
+                                                     <span class="btn-inner--icon"><i class="fa fa-pencil" style="font-size: 10px;"></i></span>
+                                                </a>
+                                            
+                                                <div class="dropdown">
+                                                    <a href="#" class="btn btn-sm bg-gradient-dark dropdown-toggle " data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                                        <span class="btn-inner--icon"><i class="fa fa-user-plus" style="font-size: 10px;"></i></span> Assign
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                                        @foreach($users as $user)
+                                                            <li>
+                                                                <a class="dropdown-item assign-user" href="#" data-user-id="{{ $user->id }}" data-file-id="{{ $file->id }}">
+                                                                     {{ $user->name }}
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

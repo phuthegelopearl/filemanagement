@@ -9,7 +9,6 @@ use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\File;
 
@@ -26,7 +25,6 @@ use App\Models\File;
 */
 
 // Define the 'users.index' route outside the group
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -38,13 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('user.dashboard');
 
     // User management routes
-    Route::resource('users', UserController::class)->except([
-        'store', 'update' // Exclude the default store and update routes
-    ]);
-	Route::get('/user-management', [UserController::class, 'index'])->name('user.index');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::get('/search', [SoftwareController::class, 'search'])->name('search');
+    Route::resource('users', UserController::class);
 
     Route::get('profile', function () {
         return view('profile');
@@ -60,11 +52,11 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('sign-up');
     
     Route::resource('/file', FileController::class);
-    Route::delete('/files/{id}', [FileController::class, 'destroy'])->name('files.destroy');
-    Route::post('/file/{id}', [FileController::class, 'update'])->name('file.update');
-
+    Route::post('/file/assign', [FileController::class, 'assignUser']);
     Route::post('/upload-document', [FileController::class, 'uploadDocument'])->name('upload-document');
     Route::get('/download/{id}', [FileController::class, 'download'])->name('download');
+    Route::get('/audits', [FileController::class, 'showAudits'])->name('audits');
+    
 });
 
 Route::group(['middleware' => 'guest'], function () {
