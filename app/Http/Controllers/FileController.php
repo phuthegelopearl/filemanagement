@@ -142,5 +142,22 @@ class FileController extends Controller
         return view('user.files', compact('files'));
     }
 
+    public function changeStatus(Request $request)
+    {
+        $request->validate([
+            'status' => 'required|in:in_use,not_in_use',
+            'file_id' => 'required|exists:files,id',
+        ]);
+
+        $file = File::find($request->file_id);
+        $file->status = $request->status;
+        $file->save();
+
+        return response()->json([
+            'message' => 'File status updated successfully',
+            'file' => $file
+        ]);
+    }
+
   
 }

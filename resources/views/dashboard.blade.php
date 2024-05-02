@@ -23,6 +23,7 @@
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File number</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client name</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Assigned</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Barcode</th>
                                         <th>Action</th>
@@ -36,8 +37,12 @@
                                                 <p class="text-sm font-weight-bold mb-0">{{  $file->client_name }}</p>
                                             </td>
                                             <td>
+                                                <p class="text-sm font-weight-bold mb-0">{{  $file->status }}</p>
+                                            </td>
+                                            <td>
                                                 {{ $file->user ? $file->user->name : 'Not assigned' }}
                                             </td>
+                                            
                                             <td class="align-middle text-center">
                                                 <div class="d-flex align-items-center justify-content-center">
                                                     <div class="d-flex align-items-center justify-content-center">

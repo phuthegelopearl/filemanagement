@@ -15,6 +15,7 @@ class File extends Model implements AuditableContract
         'file_number', // Unique identifier for the file
         'client_name', // Name of the client associated with the file
         'omang_no', // Plot number associated with the file
+        'status', // Status of the file, default is 'not_in_use'
     ];
 
     public function user()

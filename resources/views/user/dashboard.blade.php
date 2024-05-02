@@ -34,6 +34,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-start">File number</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-start">Status</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Barcode</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Action</th>
@@ -50,6 +51,13 @@
                                                     </div>
                                                 </td>
                                                 <td>
+                                                    <div class="d-flex px-2">
+                                                        <div class="my-auto">
+                                                            <h6 class="mb-0 text-sm">{{ $file->status }}</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
                                                     <p class="text-sm font-weight-bold mb-0">{{ $file->client_name }}</p>
                                                 </td>
                                                 <td class="align-middle text-center">
@@ -60,7 +68,24 @@
                                                
                                                 <td class="align-middle">
                                                     <div class="d-flex align-items-center justify-content-center">
-                                                         <a href="{{ route('file.show', $file->id) }}" class="btn btn-sm btn-info custom-btn">
+                                                       <div class="dropdown">
+                                                            <a href="#" class="btn btn-sm bg-gradient-dark dropdown-toggle custom-btn" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                                                <span class="btn-inner--icon"><i class="fa fa-check-circle" style="font-size: 10px;"></i></span>
+                                                            </a>
+                                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                                                <li>
+                                                                    <a class="dropdown-item change-status" href="#" data-status="in_use" data-file-id="{{ $file->id }}">
+                                                                        In use
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item change-status" href="#" data-status="not_in_use" data-file-id="{{ $file->id }}">
+                                                                        Done
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <a href="{{ route('file.show', $file->id) }}" class="btn btn-sm btn-info custom-btn">
                                                             <span class="btn-inner--icon"><i class="fa fa-folder-open" style="font-size: 10px;"></i></span>
                                                         </a>
                                                     </div>

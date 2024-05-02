@@ -35,7 +35,8 @@
                                             <tr>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-start">File number</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
-                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Assigned</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Assigned</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Barcode</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Action</th>
                                             </tr>
@@ -52,6 +53,9 @@
                                                 </td>
                                                 <td>
                                                     <p class="text-sm font-weight-bold mb-0">{{ $file->client_name }}</p>
+                                                </td>
+                                                 <td>
+                                                    <p class="text-sm font-weight-bold mb-0">{{ $file->status }}</p>
                                                 </td>
                                                  <td>
                                                     <p class="text-sm font-weight-bold mb-0">{{ $file->user ? $file->user->name : 'Not assigned' }}</p>

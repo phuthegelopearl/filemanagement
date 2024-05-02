@@ -47,16 +47,6 @@
         font-size: 15px;
         margin-right: 10px;
       }
-       body {
-            background-image: url('assets/img/landboard.jpeg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            color: #ffffff;
-        }
-        .navbar {
-            background-color: #FAF9F9;
-            color: #ffffff;
-        }
     </style>
     
   </head>
@@ -190,6 +180,30 @@
             })
             .then(response => response.json())
             .then(data => console.log(data))
+            .then(() => location.reload())
+            .catch(error => console.error(error));
+        });
+    });
+  </script> 
+  <script>
+    document.querySelectorAll('.change-status').forEach(function(userLink) {
+        userLink.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            fetch('/file/status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    status: event.target.dataset.status,
+                    file_id: event.target.dataset.fileId
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .then(() => location.reload())
             .catch(error => console.error(error));
         });
     });

@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::resource('/file', FileController::class);
     Route::post('/file/assign', [FileController::class, 'assignUser']);
+    Route::post('/file/status', [FileController::class, 'changeStatus']);
     Route::post('/upload-document', [FileController::class, 'uploadDocument'])->name('upload-document');
     Route::get('/download/{id}', [FileController::class, 'download'])->name('download');
     Route::get('/audits', [FileController::class, 'showAudits'])->name('audits');
