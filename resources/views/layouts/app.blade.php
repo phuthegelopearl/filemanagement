@@ -56,6 +56,9 @@
             background-color: #FAF9F9;
             color: #ffffff;
         }
+        .footer {
+            color: #ffffff;
+        }
     </style>
     
   </head>
