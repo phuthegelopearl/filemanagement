@@ -54,7 +54,7 @@
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <div class="d-flex align-items-center justify-content-center">
-                                                        {!! '<img src="data:image/jpeg;base64,' . DNS1D::getBarcodeJPG($file->file_number, 'C39+') . '" alt="barcode" />' !!}
+                                                    {!! DNS1D::getBarcodeSVG($file->file_number, "C39", 1, 25, '#2A3239') !!}
                                                     </div>
                                                 </td>
                                                
