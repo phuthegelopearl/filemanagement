@@ -47,6 +47,15 @@
         font-size: 15px;
         margin-right: 10px;
       }
+      body {
+            background-image: url('assets/img/landboard.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .navbar {
+            background-color: #FAF9F9;
+            color: #ffffff;
+        }
     </style>
     
   </head>
