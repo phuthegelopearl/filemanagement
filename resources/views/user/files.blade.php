@@ -26,7 +26,7 @@
                         <div class="col-12">
                             <div class="card mb-4">
                                 <div class="card-header pb-0">
-                                    <h6>Assigned Customer Files</h6>
+                                    <h6>All Customer Files</h6>
                                 </div>
                                 <div class="card-body px-0 pt-0 pb-2">
                                     <div class="table-responsive p-0">
@@ -35,6 +35,7 @@
                                             <tr>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-start">File number</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
+                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Assigned</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Barcode</th>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Action</th>
                                             </tr>
@@ -51,6 +52,9 @@
                                                 </td>
                                                 <td>
                                                     <p class="text-sm font-weight-bold mb-0">{{ $file->client_name }}</p>
+                                                </td>
+                                                 <td>
+                                                    <p class="text-sm font-weight-bold mb-0">{{ $file->user ? $file->user->name : 'Not assigned' }}</p>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <div class="d-flex align-items-center justify-content-center">

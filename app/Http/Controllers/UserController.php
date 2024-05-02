@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -33,7 +34,9 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request) : RedirectResponse
     {
-        User::create($request->all());
+        $data = $request->all();
+        $data['password'] = Hash::make($request->password);
+        User::create($data);
         return redirect()->route('users.index')
                 ->withSuccess('New User is added successfully.');
     }
@@ -64,7 +67,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user) : RedirectResponse
     {
-        $user->update($request->all());
+        $data = $request->all();
+        $data['password'] = Hash::make($request->password);
+        $user->update($data);
         return redirect()->back()
                 ->withSuccess('User is updated successfully.');
     }

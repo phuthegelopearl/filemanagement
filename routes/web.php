@@ -27,11 +27,11 @@ use App\Models\File;
 // Define the 'users.index' route outside the group
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', [HomeController::class, 'home'])->name('home');
+    Route::get('/', HomeController::class)->name('home');
     Route::get('/dashboard', AdminController::class)->name('admin.dashboard');
 
     Route::get('/user/dashboard', function(){
-        $files = File::all();
+        $files = auth()->user()->files;
         return view('user.dashboard', compact('files'));
     })->name('user.dashboard');
 
@@ -44,8 +44,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     
     Route::get('/logout', [SessionsController::class, 'destroy']);
-    Route::get('/user-profile', [InfoUserController::class, 'create']);
-    Route::post('/user-profile', [InfoUserController::class, 'store']);
+    Route::resource('/profile', InfoUserController::class);
+
 
     Route::get('/login', function () {
         return view('dashboard');
@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/upload-document', [FileController::class, 'uploadDocument'])->name('upload-document');
     Route::get('/download/{id}', [FileController::class, 'download'])->name('download');
     Route::get('/audits', [FileController::class, 'showAudits'])->name('audits');
+    Route::get('/files', [FileController::class, 'files'])->name('files');
     
 });
 

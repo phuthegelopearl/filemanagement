@@ -133,5 +133,14 @@ class FileController extends Controller
         return view('admin.audit', ['audits' => $audits]);
     }
 
+    public function files()
+    {
+        $files = File::whereDoesntHave('user', 
+            function ($query) {
+                $query->where('id', auth()->id());
+            })->get();
+        return view('user.files', compact('files'));
+    }
+
   
 }

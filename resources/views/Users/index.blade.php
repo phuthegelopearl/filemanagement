@@ -12,7 +12,7 @@
         @endif
 
         <p>Back to: 
-                    <a href="/admin/dashboard"><strong>Admin Dashboard</strong></a>
+                    <a href="{{ route('home') }}"><strong>Admin Dashboard</strong></a>
                 </p>
 
         <div class="card">

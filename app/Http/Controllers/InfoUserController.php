@@ -10,10 +10,34 @@ use Illuminate\Support\Facades\View;
 
 class InfoUserController extends Controller
 {
-
-    public function create()
+    public function index()
     {
-        return view('profile');
+        $user = Auth::user();
+        return view('profile', compact('user'));
+    }
+
+    public function create(Request $request)
+    {
+        $user = $request->user();
+        return view('profile', [
+            'user'=> $user,
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $user = User::find($id);
+        return view('edit-profile', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->save();
+        return redirect()->route('profile.index')->with('success','Profile updated successfully');
     }
 
     public function store(Request $request)

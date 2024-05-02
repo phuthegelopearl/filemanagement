@@ -8,7 +8,7 @@ use App\Models\File;
 
 class HomeController extends Controller
 {
-    public function home()
+    public function __invoke()
     {
         $user = Auth::user();
 
